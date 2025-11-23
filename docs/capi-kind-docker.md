@@ -1,5 +1,8 @@
 # Kubernetes Cluster API Setup and Management - Complete Documentation
 
+From:
+https://www.linkedin.com/learning/kubernetes-provisioning-for-infrastructure-as-code/
+
 ## Overview
 This documentation covers the complete process of setting up and experimenting with **Kubernetes Cluster API (CAPI)** using Kind (Kubernetes in Docker) to create and manage Kubernetes clusters declaratively. This workflow demonstrates Infrastructure as Code patterns for Kubernetes cluster management.
 
