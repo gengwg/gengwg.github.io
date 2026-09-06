@@ -3,386 +3,237 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Weigang Geng — SRE / DevOps / AI Infrastructure</title>
+<title>Weigang Geng</title>
 <style>
   :root {
-    --bg: #f8f9fa;
+    --bg: #fdfaf6;
+    --text: #2d2d2d;
+    --muted: #777;
+    --accent: #b85c38;
     --surface: #fff;
-    --text: #1a1a2e;
-    --muted: #6b7280;
-    --accent: #2563eb;
-    --accent-light: #dbeafe;
-    --border: #e5e7eb;
-    --hero-bg: #0f172a;
-    --tag-bg: #f1f5f9;
-    --tag-text: #334155;
+    --border: #e8e0d5;
   }
 
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
   body {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    font-family: Georgia, "Times New Roman", serif;
     background: var(--bg);
     color: var(--text);
-    line-height: 1.6;
-    font-size: 16px;
+    line-height: 1.8;
+    font-size: 17px;
   }
 
   a { color: var(--accent); text-decoration: none; }
   a:hover { text-decoration: underline; }
 
-  .hero {
-    background: var(--hero-bg);
-    color: #fff;
-    padding: 80px 20px 64px;
+  header {
     text-align: center;
+    padding: 80px 20px 56px;
+    border-bottom: 1px solid var(--border);
   }
-  .hero h1 { font-size: 2.5rem; font-weight: 700; letter-spacing: -0.5px; }
-  .hero .title { font-size: 1.15rem; color: #94a3b8; margin-top: 8px; }
-  .hero .location { font-size: 0.95rem; color: #64748b; margin-top: 4px; }
-  .hero .links { margin-top: 20px; display: flex; justify-content: center; gap: 24px; flex-wrap: wrap; }
-  .hero .links a { color: #93c5fd; font-weight: 500; }
-  .hero .links a:hover { color: #bfdbfe; }
+  header h1 {
+    font-size: 2.6rem;
+    font-weight: normal;
+    letter-spacing: 2px;
+    margin-bottom: 12px;
+  }
+  header .tagline {
+    font-size: 1.05rem;
+    color: var(--muted);
+    font-style: italic;
+  }
+  header .links {
+    margin-top: 24px;
+    display: flex;
+    justify-content: center;
+    gap: 24px;
+    flex-wrap: wrap;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    font-size: 0.9rem;
+  }
 
-  .container { max-width: 780px; margin: 0 auto; padding: 0 20px; }
+  .container { max-width: 660px; margin: 0 auto; padding: 0 20px; }
 
   section { padding: 48px 0; }
   section + section { border-top: 1px solid var(--border); }
 
-  h2 { font-size: 1.5rem; font-weight: 700; margin-bottom: 24px; color: var(--hero-bg); }
+  h2 {
+    font-size: 1.3rem;
+    font-weight: normal;
+    color: var(--accent);
+    margin-bottom: 20px;
+    letter-spacing: 1px;
+  }
 
-  .about p { font-size: 1.05rem; color: #374151; max-width: 680px; }
+  .intro p { margin-bottom: 16px; }
 
-  .achievements { display: grid; grid-template-columns: 1fr; gap: 16px; }
-  @media (min-width: 600px) { .achievements { grid-template-columns: 1fr 1fr; } }
-  @media (min-width: 768px) { .achievements { grid-template-columns: 1fr 1fr 1fr; } }
-  .ach-card {
+  .work-list { list-style: none; }
+  .work-list li {
+    margin-bottom: 20px;
+    padding-left: 16px;
+    border-left: 2px solid var(--border);
+  }
+  .work-list .when { font-size: 0.85rem; color: var(--muted); }
+  .work-list .what { font-weight: bold; }
+  .work-list .where { color: var(--accent); }
+
+  .bookshelf {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 12px;
+  }
+  .bookshelf a {
+    display: block;
     background: var(--surface);
     border: 1px solid var(--border);
-    border-radius: 8px;
-    padding: 20px;
+    border-radius: 4px;
+    padding: 12px 14px;
+    font-family: "KaiTi", "楷体", "STKaiti", serif;
+    font-size: 0.95rem;
+    transition: border-color 0.2s;
   }
-  .ach-card .stat { font-size: 1.5rem; font-weight: 700; color: var(--accent); }
-  .ach-card .label { font-size: 0.875rem; color: var(--muted); margin-top: 4px; }
-
-  .exp-item { margin-bottom: 32px; }
-  .exp-header { display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 4px; }
-  .exp-header .role { font-weight: 700; font-size: 1.1rem; }
-  .exp-header .company { color: var(--accent); font-weight: 600; }
-  .exp-header .dates { font-size: 0.875rem; color: var(--muted); white-space: nowrap; }
-  .exp-item ul { margin-top: 8px; padding-left: 20px; }
-  .exp-item li { font-size: 0.95rem; color: #374151; margin-bottom: 4px; }
-  .exp-item li::marker { color: var(--accent); }
-
-  .skills-grid { display: flex; flex-wrap: wrap; gap: 8px; }
-  .skill-tag {
-    background: var(--tag-bg);
-    color: var(--tag-text);
-    padding: 6px 14px;
-    border-radius: 20px;
-    font-size: 0.875rem;
-    font-weight: 500;
+  .bookshelf a:hover {
+    border-color: var(--accent);
+    text-decoration: none;
   }
 
-  .edu-item { margin-bottom: 16px; }
-  .edu-item .degree { font-weight: 700; }
-  .edu-item .school { color: var(--muted); font-size: 0.95rem; }
-
-  .cert-item { margin-bottom: 8px; font-size: 0.95rem; }
-  .cert-item .cert-name { font-weight: 600; }
-  .cert-item .cert-org { color: var(--muted); }
-
-  .sub-role { margin-bottom: 24px; padding-left: 16px; border-left: 2px solid var(--accent-light); }
+  .reading-list { list-style: none; }
+  .reading-list li { margin-bottom: 6px; font-size: 0.9rem; }
+  .reading-list a { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
 
   footer {
-    background: var(--hero-bg);
-    color: #64748b;
     text-align: center;
-    padding: 32px 20px;
-    font-size: 0.875rem;
+    padding: 40px 20px;
+    color: var(--muted);
+    font-size: 0.85rem;
+    border-top: 1px solid var(--border);
   }
-  footer .links { display: flex; justify-content: center; gap: 20px; margin-bottom: 12px; }
-  footer .links a { color: #93c5fd; }
+  footer .links {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-bottom: 12px;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  }
 
   @media (max-width: 600px) {
-    .hero { padding: 48px 16px 40px; }
-    .hero h1 { font-size: 1.8rem; }
-    .hero .title { font-size: 0.95rem; }
+    header { padding: 48px 16px 36px; }
+    header h1 { font-size: 2rem; }
     section { padding: 32px 0; }
-    .exp-header { flex-direction: column; }
+    .bookshelf { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); }
   }
 </style>
 </head>
 <body>
 
-<header class="hero">
+<header>
   <h1>Weigang Geng</h1>
-  <p class="title">SRE / DevOps &middot; AI Infrastructure &middot; Kubernetes &middot; LLM Inference</p>
-  <p class="location">San Francisco Bay Area</p>
+  <p class="tagline">Physics PhD turned SRE. I keep large GPU clusters running and collect Chinese books.</p>
   <nav class="links">
-    <a href="https://github.com/gengwg" target="_blank" rel="noopener">GitHub</a>
-    <a href="https://www.linkedin.com/in/gengwg" target="_blank" rel="noopener">LinkedIn</a>
-    <a href="https://gengwg.medium.com/" target="_blank" rel="noopener">Blog</a>
-    <a href="https://scholar.google.com/citations?user=YOUR_ID" target="_blank" rel="noopener">Google Scholar</a>
+    <a href="https://github.com/gengwg">GitHub</a>
+    <a href="https://www.linkedin.com/in/gengwg">LinkedIn</a>
+    <a href="https://gengwg.medium.com/">Blog</a>
   </nav>
 </header>
 
 <main class="container">
 
-  <section class="about" id="about">
-    <h2>About</h2>
+  <section class="intro">
+    <h2>Hello</h2>
     <p>
-      Staff/Senior Site Reliability Engineer with 10+ years building and scaling global AI/ML infrastructure.
-      I reduce operational toil through automation, high-availability architecture, and observability systems —
-      infrastructure supporting $300M+ revenue streams and 20,000+ GPU clusters, with SLO-based observability
-      that cuts MTTR. I thrive at the intersection of innovation and reliability.
+      I'm a Site Reliability Engineer in the San Francisco Bay Area, working at the intersection of AI infrastructure and reliability.
+      I build and operate large-scale GPU clusters — Kubernetes, Slurm, observability, the whole stack — for companies running LLM inference and training.
+    </p>
+    <p>
+      Before this, I spent a decade in experimental particle physics: searching for the Higgs boson at Fermilab, measuring CP violation in single top quarks,
+      and reconstructing PET images of the brain. I earned my PhD at Michigan State and spent time at CPPM in Marseille on an Eiffel Scholarship.
+      I still think like a physicist — root-cause analysis, first-principles reasoning, and a low tolerance for things that "just work by accident."
+    </p>
+    <p>
+      I've been lucky to work on some big things: 3,000-GPU Kubernetes clusters at Meta, 10,000-machine datacenter builds at Machine Zone,
+      monitoring systems covering 300+ services at Walmart, and most recently an 800-node GPU fleet at Aranya.
+      I care about making systems observable, automating away toil, and building on-call practices that don't burn people out.
     </p>
   </section>
 
-  <section id="achievements">
-    <h2>Key Achievements</h2>
-    <div class="achievements">
-      <div class="ach-card">
-        <div class="stat">3h &rarr; &lt;3 min</div>
-        <div class="label">Time-to-Detect reduced 99% at Meta by re-architecting monitoring</div>
-      </div>
-      <div class="ach-card">
-        <div class="stat">40K &rarr; 20</div>
-        <div class="label">Weekly on-call pages cut 99.5% at Lambda with symptom-based alerting</div>
-      </div>
-      <div class="ach-card">
-        <div class="stat">3,000+ GPUs</div>
-        <div class="label">Kubernetes and Slurm clusters built from scratch at Meta for AI/ML workloads</div>
-      </div>
-      <div class="ach-card">
-        <div class="stat">80% &rarr; 99.9%</div>
-        <div class="label">Monitoring uptime at Walmart via Prometheus/Grafana overhaul</div>
-      </div>
-      <div class="ach-card">
-        <div class="stat">Weeks &rarr; &lt;1 hr</div>
-        <div class="label">MTTR slashed through automated remediation and CI/CD at Lambda</div>
-      </div>
-      <div class="ach-card">
-        <div class="stat">38%</div>
-        <div class="label">Observability ingest cost reduction with zero coverage loss at Aranya</div>
-      </div>
+  <section>
+    <h2>What I work on</h2>
+    <ul class="work-list">
+      <li>
+        <span class="what">GPU fleet reliability</span> <span class="where">@ Aranya</span><br>
+        <span class="when">2026&ndash;present</span>
+        &mdash; 800+ nodes, 8 clusters, 5 providers. Observability, alerting, incident response.
+      </li>
+      <li>
+        <span class="what">SLO frameworks &amp; alerting</span> <span class="where">@ Lambda</span><br>
+        <span class="when">2025&ndash;2026</span>
+        &mdash; First SLO framework for GPU availability. Cut on-call pages from 40K/week to 20.
+      </li>
+      <li>
+        <span class="what">Kubernetes &amp; Slurm for AI/ML</span> <span class="where">@ Meta</span><br>
+        <span class="when">2019&ndash;2025</span>
+        &mdash; Built 3,000+ GPU clusters. Zero-downtime control-plane upgrades. Top 1% documentation contributor.
+      </li>
+      <li>
+        <span class="what">Observability at scale</span> <span class="where">@ Walmart</span><br>
+        <span class="when">2016&ndash;2019</span>
+        &mdash; Prometheus/Grafana overhaul. 1,500+ dashboards, 300+ services. Uptime from 80% to 99.9%.
+      </li>
+      <li>
+        <span class="what">Datacenter automation</span> <span class="where">@ Machine Zone</span><br>
+        <span class="when">2015&ndash;2016</span>
+        &mdash; Provisioned 10,000+ machines. 10x speedup with Puppet/Salt/Ansible.
+      </li>
+      <li>
+        <span class="what">OpenStack &amp; object storage</span> <span class="where">@ Seagate</span><br>
+        <span class="when">2013&ndash;2015</span>
+        &mdash; First virtualized Swift clusters. ELK log management framework.
+      </li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Chinese bookshelf</h2>
+    <p style="margin-bottom:20px;color:var(--muted);font-size:0.95rem;">
+      I've collected Chinese literature and history here for years. A small library I keep online.
+    </p>
+    <div class="bookshelf">
+      <a href="ebooks/book_chn/classic/poetry/tangshi_300.html">唐诗三百首</a>
+      <a href="ebooks/book_chn/classic/prose/guwenguanzhi/gwgz.html">古文观止</a>
+      <a href="ebooks/book_chn/classic/poetry/libaiquanji.htm">李白诗全集</a>
+      <a href="ebooks/book_chn/classic/popnovel/rulinwaishi/content.html">儒林外史</a>
+      <a href="ebooks/book_chn/classic/popnovel/guanchang/content.html">官场现形记</a>
+      <a href="ebooks/book_chn/classic/prose/short_pop/0_INDEX.html">散文</a>
+      <a href="ebooks/book_chn/modern/history/china_100y/index.html">中国百年史</a>
+      <a href="ebooks/book_chn/modern/history_gy/huxueyan/content.html">红顶商人胡雪岩</a>
+      <a href="ebooks/book_chn/modern/history_gy/lihongzhang/content.html">李鸿章</a>
+      <a href="ebooks/book_chn/modern/history_gy/caomangyixong/content.html">草莽英雄</a>
+      <a href="ebooks/book_chn/modern/history_gy/zhuangyuan/content.html">状元娘子</a>
+      <a href="ebooks/book_chn/sound_books/tea/index.html">茶</a>
+      <a href="ebooks/book_chn/index.html" style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;text-align:center;color:var(--muted);">
+        &rarr; All books
+      </a>
     </div>
   </section>
 
-  <section id="experience">
-    <h2>Experience</h2>
-
-    <div class="exp-item">
-      <div class="exp-header">
-        <span><span class="role">Site Reliability Engineer</span> &middot; <span class="company">Aranya Inc.</span></span>
-        <span class="dates">Jun 2026 &ndash; Present</span>
-      </div>
-      <ul>
-        <li>Own reliability and observability for an 800+ node, 8-cluster GPU fleet across five infrastructure providers.</li>
-        <li>Resolved a 30+ hour severity-1 outage solo for the largest customer — traced to upstream fiber damage, restored a degraded transit path from 0.7 to 940 Mbit/s, returning ~400 stranded GPUs to service.</li>
-        <li>Cut observability ingest 38% (~1.1M active series) with zero loss of coverage; rebuilt cost model, reducing monthly run rate ~40%.</li>
-        <li>Author and maintain ~45% of the production alerting ruleset; redesigned node-failure detection from cluster-level to per-node, cutting TTD from 60–90 min to ~10 min.</li>
-        <li>Established the team's incident and on-call practice from scratch — rotation policy, severity tiers, blameless postmortems — and mentored a new engineer to production ownership.</li>
-      </ul>
-    </div>
-
-    <div class="exp-item">
-      <div class="exp-header">
-        <span><span class="role">Site Reliability Engineer</span> &middot; <span class="company">Lambda</span></span>
-        <span class="dates">Sep 2025 &ndash; Jan 2026</span>
-      </div>
-      <ul>
-        <li>Cut on-call page volume 99.5% — from 40,000+ weekly pages to roughly 20 — by re-architecting alerting logic around actionable, symptom-based triggers.</li>
-        <li>Architected the company's first SLO framework for GPU and cluster availability, establishing measurable reliability targets.</li>
-        <li>Cut MTTR from weeks to under an hour by leading automated remediation, GPU spare-pool design, and CI/CD initiatives.</li>
-        <li>Institutionalized code review, incident management, and project management practices adopted company-wide; served as acting Scrum Master for infrastructure.</li>
-      </ul>
-    </div>
-
-    <div class="exp-item">
-      <div class="exp-header">
-        <span><span class="role">Meta</span></span>
-        <span class="dates">Oct 2019 &ndash; Apr 2025 &middot; 5.5 yrs</span>
-      </div>
-
-      <div class="sub-role">
-        <div class="exp-header">
-          <span><span class="role" style="font-size:1rem">Production Engineer</span></span>
-          <span class="dates">Dec 2023 &ndash; Apr 2025</span>
-        </div>
-        <ul>
-          <li>Cut Time-to-Detect 99%, from 3 hours to under 3 minutes, by re-architecting local and remote monitoring across lab infrastructure.</li>
-          <li>Automated NVIDIA driver upgrades, eliminating 80% of manual effort and improving GPU performance.</li>
-          <li>Established SLIs and SLOs for lab provisioning, sustaining 99.9% success rates in weekly reporting.</li>
-          <li>Mentored 15+ engineers, interns, and contractors; documentation and workshop practice raised team productivity 20%.</li>
-        </ul>
-      </div>
-
-      <div class="sub-role">
-        <div class="exp-header">
-          <span><span class="role" style="font-size:1rem">Infrastructure Engineer</span></span>
-          <span class="dates">Oct 2019 &ndash; Dec 2023</span>
-        </div>
-        <ul>
-          <li>Designed, built, and operated Kubernetes and Slurm clusters totaling 3,000+ GPUs — from provisioning through performance tuning — enabling AI/ML and HPC workloads across global data centers.</li>
-          <li>Led Meta's first zero-downtime Kubernetes control-plane upgrades and deployed HA Kubernetes with X.509 security.</li>
-          <li>Cut job startup time from 45 minutes to near-instant by spearheading container image caching.</li>
-          <li>Hardened security and audit compliance with Kyverno policies, LDAP authentication, RBAC, and automated full-cluster backup.</li>
-          <li>Recognized as a top 1% contributor company-wide for documentation quality.</li>
-        </ul>
-      </div>
-    </div>
-
-    <div class="exp-item">
-      <div class="exp-header">
-        <span><span class="role">Automation Engineer</span> &middot; <span class="company">Walmart Global eCommerce</span></span>
-        <span class="dates">Aug 2016 &ndash; Oct 2019</span>
-      </div>
-      <ul>
-        <li>Designed and led next-gen centralized metrics collection and monitoring systems based on Prometheus/Alertmanager/Grafana.</li>
-        <li>Improved uptime to 99.9% (from ~80%) by setting up HA for Prometheus and backend services; reduced false alarms ~20x.</li>
-        <li>Built and curated 1,500+ dashboards and alerts to monitor 300+ services through Jolokia/JMX/Telegraf.</li>
-        <li>Set up team's production Kubernetes cluster, hosting 50+ services; conducted infrastructure capacity planning for cloud and bare metal.</li>
-      </ul>
-    </div>
-
-    <div class="exp-item">
-      <div class="exp-header">
-        <span><span class="role">DevOps / Infrastructure Automation Engineer</span> &middot; <span class="company">Machine Zone</span></span>
-        <span class="dates">Aug 2015 &ndash; Aug 2016</span>
-      </div>
-      <ul>
-        <li>Provisioned 10,000+ physical and virtual machines to bring a new data center into production.</li>
-        <li>Cut provisioning time 10x by automating the build process with Puppet, SaltStack, Ansible, and Python.</li>
-        <li>Designed automated backup across F5 load balancers, Palo Alto firewalls, and Foreman; led transition to Infoblox for DNS, DHCP, and IPAM.</li>
-      </ul>
-    </div>
-
-    <div class="exp-item">
-      <div class="exp-header">
-        <span><span class="role">DevOps Engineer</span> &middot; <span class="company">Seagate Technology</span></span>
-        <span class="dates">Oct 2013 &ndash; Feb 2015</span>
-      </div>
-      <ul>
-        <li>Built the first virtualized OpenStack Swift clusters on VMware vCenter for development and test, cutting hardware spend.</li>
-        <li>Delivered the first successful CentOS build of the company's next-generation object storage platform.</li>
-        <li>Built a Logstash/Elasticsearch/Kibana/Redis log-management framework enabling first production analysis of cluster logs.</li>
-      </ul>
-    </div>
-
-    <div class="exp-item">
-      <div class="exp-header">
-        <span><span class="role">Earlier — Research &amp; Engineering</span></span>
-      </div>
-      <ul>
-        <li><strong>Fermilab</strong> (2009–2011) — Visiting Researcher: world's first CP Violation measurement in single top; Level 2 trigger expert for the D0 detector.</li>
-        <li><strong>Michigan State University</strong> (2005–2011) — Research &amp; Teaching Assistant: data analysis for D0 experiment, Higgs and single top search.</li>
-        <li><strong>Université Aix-Marseille II</strong> (2008–2009) — Visiting Researcher: Higgs boson search at CPPM; Eiffel Scholarship recipient.</li>
-        <li><strong>Oakland University</strong> (2013) — Academic Researcher: PET imaging; multithreaded brain simulation code yielding 5x speedup; MPI parallelization on Rocks cluster.</li>
-      </ul>
-    </div>
-  </section>
-
-  <section id="skills">
-    <h2>Skills &amp; Technologies</h2>
-    <div class="skills-grid">
-      <span class="skill-tag">Kubernetes</span>
-      <span class="skill-tag">Prometheus / Grafana</span>
-      <span class="skill-tag">AI/ML Infrastructure</span>
-      <span class="skill-tag">GPU / HPC</span>
-      <span class="skill-tag">Slurm</span>
-      <span class="skill-tag">LLM Inference</span>
-      <span class="skill-tag">CUDA</span>
-      <span class="skill-tag">Python</span>
-      <span class="skill-tag">AWS</span>
-      <span class="skill-tag">OpenStack</span>
-      <span class="skill-tag">Ansible / Puppet / SaltStack</span>
-      <span class="skill-tag">CI/CD</span>
-      <span class="skill-tag">Observability</span>
-      <span class="skill-tag">SLO / SLI</span>
-      <span class="skill-tag">Alertmanager</span>
-      <span class="skill-tag">Elasticsearch / Kibana</span>
-      <span class="skill-tag">Linux</span>
-      <span class="skill-tag">Docker / Containerd</span>
-      <span class="skill-tag">Networking / DNS</span>
-      <span class="skill-tag">C / C++</span>
-    </div>
-  </section>
-
-  <section id="education">
-    <h2>Education</h2>
-    <div class="edu-item">
-      <div class="degree">Ph.D., Elementary Particle Physics</div>
-      <div class="school">Michigan State University</div>
-    </div>
-    <div class="edu-item">
-      <div class="degree">B.S., Physics</div>
-      <div class="school">Lanzhou University</div>
-    </div>
-  </section>
-
-  <section id="certifications">
-    <h2>Certifications</h2>
-    <div class="cert-item">
-      <span class="cert-name">Certified Kubernetes Administrator (CKA)</span>
-      <span class="cert-org"> &middot; The Linux Foundation</span>
-    </div>
-    <div class="cert-item">
-      <span class="cert-name">HashiCorp Certified: Terraform Associate</span>
-      <span class="cert-org"> &middot; HashiCorp</span>
-    </div>
-    <div class="cert-item">
-      <span class="cert-name">Mellanox InfiniBand Professional</span>
-      <span class="cert-org"> &middot; Mellanox Technologies</span>
-    </div>
-    <div class="cert-item">
-      <span class="cert-name">Microsoft Certified: Azure AI Fundamentals</span>
-      <span class="cert-org"> &middot; Microsoft</span>
-    </div>
-    <div class="cert-item">
-      <span class="cert-name">Microsoft Certified: Azure Data Fundamentals</span>
-      <span class="cert-org"> &middot; Microsoft</span>
-    </div>
-    <div class="cert-item">
-      <span class="cert-name">Microsoft Certified: Azure Fundamentals</span>
-      <span class="cert-org"> &middot; Microsoft</span>
-    </div>
-    <div class="cert-item">
-      <span class="cert-name">Running Containers on Amazon EKS</span>
-      <span class="cert-org"> &middot; AWS</span>
-    </div>
-    <div class="cert-item">
-      <span class="cert-name">Kubernetes Fundamentals (LFS258)</span>
-      <span class="cert-org"> &middot; The Linux Foundation</span>
-    </div>
-    <div class="cert-item">
-      <span class="cert-name">Apache Kafka Training</span>
-      <span class="cert-org"> &middot; Confluent</span>
-    </div>
-    <div class="cert-item">
-      <span class="cert-name">CompTIA IT Fundamentals+</span>
-      <span class="cert-org"> &middot; CompTIA</span>
-    </div>
-    <div class="cert-item">
-      <span class="cert-name">Machine Learning</span>
-      <span class="cert-org"> &middot; Coursera</span>
-    </div>
-    <div class="cert-item">
-      <span class="cert-name">RKE2 Basics</span>
-      <span class="cert-org"> &middot; Rancher</span>
-    </div>
+  <section>
+    <h2>Reading &amp; links</h2>
+    <ul class="reading-list">
+      <li><a href="https://cloud.google.com/blog/products/containers-kubernetes/how-we-built-a-130000-node-gke-cluster/">How we built a 130,000-node GKE cluster</a></li>
+      <li><a href="https://kueue.sigs.k8s.io/docs/concepts/multikueue/">Kueue MultiKueue</a></li>
+    </ul>
   </section>
 
 </main>
 
 <footer>
   <nav class="links">
-    <a href="https://github.com/gengwg" target="_blank" rel="noopener">GitHub</a>
-    <a href="https://www.linkedin.com/in/gengwg" target="_blank" rel="noopener">LinkedIn</a>
-    <a href="https://gengwg.medium.com/" target="_blank" rel="noopener">Blog</a>
-    <a href="https://scholar.google.com/citations?user=YOUR_ID" target="_blank" rel="noopener">Google Scholar</a>
+    <a href="https://github.com/gengwg">GitHub</a>
+    <a href="https://www.linkedin.com/in/gengwg">LinkedIn</a>
+    <a href="https://gengwg.medium.com/">Blog</a>
   </nav>
-  <p>&copy; 2026 Weigang Geng</p>
+  <p>Weigang Geng &mdash; San Francisco Bay Area</p>
 </footer>
 
 </body>
