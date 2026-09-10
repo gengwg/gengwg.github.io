@@ -3,7 +3,7 @@
 (function () {
   "use strict";
 
-  var GEMINI_API_KEY = "AQ.Ab8RN6ImMSJVD3lE98vnKxbeXQsSegrXeMt_yVD23UrqA2rhjw";
+  var GEMINI_API_KEY = "AQ.Ab8RN6Iw-uWO6IPLdwTbVjEAas0ckpODhw1pO0ZgbgHK8q11Rg";
   var MODEL = "gemini-3.1-flash-lite";
   var API_URL = "https://generativelanguage.googleapis.com/v1beta/models/" + MODEL + ":generateContent";
 
