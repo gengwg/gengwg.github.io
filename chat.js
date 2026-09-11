@@ -3,9 +3,10 @@
 (function () {
   "use strict";
 
-  var GEMINI_API_KEY = "AQ.Ab8RN6Iw-uWO6IPLdwTbVjEAas0ckpODhw1pO0ZgbgHK8q11Rg";
-  var MODEL = "gemini-3.1-flash-lite";
-  var API_URL = "https://generativelanguage.googleapis.com/v1beta/models/" + MODEL + ":generateContent";
+  // Endpoint of the Cloudflare Worker proxy (see worker/).
+  // The Gemini key lives server-side in the worker — not in this file.
+  var API_URL = "https://twin-proxy.gengwg.workers.dev/chat";
+  var WORKER_PLACEHOLDER = "TWIN_PROXY_URL_HERE";
 
   var MAX_INPUT_CHARS = 500;
   var MAX_HISTORY = 6;        // user+model turns kept for context
@@ -70,7 +71,7 @@
   try { msgCount = parseInt(sessionStorage.getItem("twin_msg_count") || "0", 10) || 0; } catch (e) {}
 
   function isConfigured() {
-    return GEMINI_API_KEY && GEMINI_API_KEY.indexOf("YOUR_") !== 0;
+    return API_URL.indexOf(WORKER_PLACEHOLDER) === -1;
   }
 
   function sanitizeInput(s) {
@@ -100,7 +101,7 @@
   async function askTwin(userText) {
     var res = await fetch(API_URL, {
       method: "POST",
-      headers: { "x-goog-api-key": GEMINI_API_KEY, "Content-Type": "application/json" },
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify(buildRequestBody(userText))
     });
     if (!res.ok) {
@@ -288,7 +289,7 @@
     isConfigured: isConfigured,
     askTwin: askTwin,
     _reset: function () { history = []; msgCount = 0; lastSend = 0; sending = false; },
-    config: { MODEL: MODEL, MAX_INPUT_CHARS: MAX_INPUT_CHARS, MAX_HISTORY: MAX_HISTORY, MAX_SESSION_MSGS: MAX_SESSION_MSGS }
+    config: { MAX_INPUT_CHARS: MAX_INPUT_CHARS, MAX_HISTORY: MAX_HISTORY, MAX_SESSION_MSGS: MAX_SESSION_MSGS, API_URL: API_URL }
   };
 
   if (typeof document !== "undefined" && document.body) {
