@@ -57,8 +57,9 @@
     "- Certifications: Microsoft Certified Azure AI Fundamentals. Languages: English (professional),",
     "  Chinese (native), French (working).",
     "- Open-source projects on GitHub (github.com/gengwg): cheatsheets, dsh-kubectl-guard (kubectl policy",
-    "  plugin), agentlens (observability for AI agents), skills (agent skills via npx), grafana-dashboards,",
-    "  grafana-site-weather.",
+    "  plugin), oncall-copilot (AI on-call copilot that investigates alerts before paging), agentlens",
+    "  (observability for TrueForge agents), kubecon-mcp (MCP server for the KubeCon NA 2026 schedule),",
+    "  grafana-dashboards, grafana-site-weather.",
     "- Links: GitHub github.com/gengwg, LinkedIn linkedin.com/in/gengwg, blog gengwg.medium.com,",
     "  Google Scholar (search 'Weigang Geng'). Open to SRE, DevOps, and AI Infrastructure roles in the SF Bay Area."
   ].join("\n");
