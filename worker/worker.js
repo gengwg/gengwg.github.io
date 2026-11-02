@@ -5,16 +5,27 @@
 const MODEL = "gemini-3.1-flash-lite";
 const GEMINI_URL = "https://generativelanguage.googleapis.com/v1beta/models/" + MODEL + ":generateContent";
 
-const ALLOWED_ORIGINS = ["https://gengwg.github.io", "http://localhost", "http://127.0.0.1"];
+const SITE_ORIGIN = "https://gengwg.github.io";
+const LOCAL_HOSTS = ["localhost", "127.0.0.1"];
 const MAX_BODY_BYTES = 8192;
 const RATE_LIMIT_PER_MIN = 10; // per IP
 
 // In-memory sliding window per IP (per worker instance — good enough for casual abuse)
 const buckets = new Map();
 
+// Exact origin match (a prefix match would admit gengwg.github.io.evil.com).
+// Any port on localhost so local dev servers work. Returns the origin or null.
+function allowedOrigin(value) {
+  try {
+    const u = new URL(value);
+    if (u.origin === SITE_ORIGIN) return u.origin;
+    if (u.protocol === "http:" && LOCAL_HOSTS.includes(u.hostname)) return u.origin;
+  } catch {}
+  return null;
+}
+
 function clientAllowed(request) {
-  const origin = request.headers.get("Origin") || request.headers.get("Referer") || "";
-  return ALLOWED_ORIGINS.some((o) => origin.startsWith(o));
+  return allowedOrigin(request.headers.get("Origin") || request.headers.get("Referer")) !== null;
 }
 
 function rateLimited(ip) {
@@ -32,10 +43,9 @@ function rateLimited(ip) {
 }
 
 function corsHeaders(request) {
-  const origin = request.headers.get("Origin");
-  const allowed = ALLOWED_ORIGINS.find((o) => origin && origin.startsWith(o));
   return {
-    "Access-Control-Allow-Origin": allowed || ALLOWED_ORIGINS[0],
+    "Access-Control-Allow-Origin": allowedOrigin(request.headers.get("Origin")) || SITE_ORIGIN,
+    Vary: "Origin",
     "Access-Control-Allow-Methods": "POST, OPTIONS",
     "Access-Control-Allow-Headers": "Content-Type",
   };
