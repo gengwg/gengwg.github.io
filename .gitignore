@@ -93,3 +93,6 @@ ENV/
 
 # vim backup file
 *~
+
+# Wrangler local dev state
+.wrangler/
